@@ -1,4 +1,4 @@
-# rest-retry-application
+# Rest Retry Application
 - It's Spring boot REST service.
 - It provides two different types of retry mechanism i.e. RetryResilience and RetryTemplate.
 - It provides rest endpoints to receive the consumer request.

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+
+    <Properties>
+        <Property name="log-path">/Users/g67v/Source/git/git_learn/rest-retry-application/logs</Property>
+        <Property name="archive-path">/Users/g67v/Source/git/git_learn/rest-retry-application/logs/archive</Property>
+    </Properties>
+
+    <Appenders>
+
+        <Console name="consoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout
+                    pattern="DateTime=%d{yyyy-MM-dd HH:mm:ss:SSS z}, Thread=[%.80t], Message=%m%n"/>
+            <Filters>
+                <ThresholdFilter level="DEBUG"/>
+            </Filters>
+        </Console>
+
+        <RollingFile name="fileLogAppender"
+                     fileName="${log-path}/consumerLogs.txt"
+                     filePattern="${archive-path}/consumerLogs.txt.%d{yyyy-MM-dd-hh-mm}.gz">
+            <PatternLayout
+                    pattern="DateTime=%d{yyyy-MM-dd HH:mm:ss:SSS z}, Thread=[%.80t], Message=%m%n"/>
+
+            <Filters>
+                <ThresholdFilter level="INFO"/>
+            </Filters>
+
+            <Policies>
+                <SizeBasedTriggeringPolicy size="1000KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="100"/>
+        </RollingFile>
+
+        <RollingFile name="retryResilienceAppender"
+                     fileName="${log-path}/retryResilienceLogs.txt"
+                     filePattern="${archive-path}/retryResilienceLogs.txt.%d{yyyy-MM-dd-hh-mm}.gz">
+            <PatternLayout
+                    pattern="DateTime=%d{yyyy-MM-dd HH:mm:ss:SSS z}, Thread=[%.80t], Message=%m%n"/>
+
+            <Filters>
+                <ThresholdFilter level="INFO"/>
+            </Filters>
+
+            <Policies>
+                <SizeBasedTriggeringPolicy size="1000KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="100"/>
+        </RollingFile>
+
+        <RollingFile name="retryTemplateAppender"
+                     fileName="${log-path}/retryTemplateLogs.txt"
+                     filePattern="${archive-path}/retryTemplateLogs.txt.%d{yyyy-MM-dd-hh-mm}.gz">
+            <PatternLayout
+                    pattern="DateTime=%d{yyyy-MM-dd HH:mm:ss:SSS z}, Thread=[%.80t], Message=%m%n"/>
+
+            <Filters>
+                <ThresholdFilter level="INFO"/>
+            </Filters>
+
+            <Policies>
+                <SizeBasedTriggeringPolicy size="1000KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="100"/>
+        </RollingFile>
+
+    </Appenders>
+    <Loggers>
+
+        <Logger name="com.nord.rest.retry.application.service.RetryResilienceService" additivity="false"
+                level="INFO">
+            <AppenderRef ref="consoleAppender"/>
+            <AppenderRef ref="retryResilienceAppender"/>
+        </Logger>
+
+        <Logger name="com.nord.rest.retry.application.service.RetryTemplateService" additivity="false"
+                level="INFO">
+            <AppenderRef ref="consoleAppender"/>
+            <AppenderRef ref="retryTemplateAppender"/>
+        </Logger>
+
+        <Root level="DEBUG">
+            <AppenderRef ref="consoleAppender"/>
+            <AppenderRef ref="fileLogAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>
